@@ -5,16 +5,9 @@ from .utils import json_to_csv
 import json
 
 
-def serialize_queryset(queryset, format):
-    data = serializers.serialize(format, queryset)
+def serialize_queryset(queryset, values, format):
+    data = serializers.serialize(format, queryset, fields=values)
     return data
-
-
-def filter_fields(fields, names):
-	for field in fields.keys():
-		if field not in names:
-			fields.pop(field)
-	return fields
 
 
 def filter_export(modeladmin, request, queryset, format):
@@ -28,18 +21,18 @@ def filter_export(modeladmin, request, queryset, format):
     	fieldnames = export_data.split(',')
 
         if format == "csv":
-            data = serialize_queryset(queryset, "json")
+            data = serialize_queryset(queryset, fieldnames, "json")
             data = json.loads(data)
 
             dataFlattened = []
             for item in data:
             	print item["fields"]
-                flattednedItem = filter_fields(item["fields"], fieldnames)
+                flattednedItem = item["fields"]
                 dataFlattened.append(flattednedItem)
             data = json.dumps(dataFlattened)
             data = json_to_csv(data, fieldnames)
         else:
-            data = serialize_queryset(queryset, format)
+            data = serialize_queryset(queryset, fieldnames, format)
 
         response = HttpResponse(data, mimetype="application/x-download")
         content = "attachment;filename={filename}.{extention}".format(
