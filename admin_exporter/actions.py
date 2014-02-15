@@ -10,7 +10,7 @@ def serialize_queryset(queryset, values, format):
     return data
 
 
-def filter_export(modeladmin, request, queryset, format):
+def export(modeladmin, request, queryset, format):
     selected_action = request.POST.getlist('_selected_action')
     select_across = request.POST.get('select_across')
     action = request.POST.get('action')
@@ -52,17 +52,17 @@ def filter_export(modeladmin, request, queryset, format):
         })
 
 def export_as_csv_action(modeladmin, request, queryset):
-    return filter_export(modeladmin, request, queryset, format="csv")
+    return export(modeladmin, request, queryset, format="csv")
 export_as_csv_action.short_description = "Export selected items to CSV"
 
 def export_as_json_action(modeladmin, request, queryset):
-    return filter_export(modeladmin, request, queryset, format="json")
+    return export(modeladmin, request, queryset, format="json")
 export_as_json_action.short_description = "Export selected items to JSON"
 
 def export_as_xml_action(modeladmin, request, queryset):
-    return filter_export(modeladmin, request, queryset, format="xml")
+    return export(modeladmin, request, queryset, format="xml")
 export_as_xml_action.short_description = "Export selected items to XML"
 
 def export_as_yaml_action(modeladmin, request, queryset):
-    return filter_export(modeladmin, request, queryset, format="yaml")
+    return export(modeladmin, request, queryset, format="yaml")
 export_as_yaml_action.short_description = "Export selected items to YAML"
