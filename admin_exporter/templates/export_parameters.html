@@ -1,0 +1,42 @@
+{% extends "admin/base_site.html" %}
+{% load i18n staticfiles admin_exporter_tags %}
+
+{% block extrastyle %}
+  {{ block.super }}
+  <link rel="stylesheet" type="text/css" href="{% static 'admin_export/css/admin-export.css' %}"/>
+{% endblock %}
+
+{% block extrahead %}
+  {{ block.super }}
+  <script type="text/javascript" src="{% static 'admin_export/js/admin-export-scripts.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+<form id="export-form" method="post" action="" enctype="multipart/form-data"> {% csrf_token %}
+
+    {% for action in selected_actions %}
+    <input type="hidden" name="_selected_action" value="{{ action }}">
+    {% endfor %}
+    <input type="hidden" name="select_across" value="{{ select_across }}">
+    <input type="hidden" name="action" value="{{ action }}">
+    <input type="hidden" name="export_data" id="export-data">
+
+    <div id="content-main">
+        <div class="module aligned filter-content">
+            <p class="export-title">{% trans 'Select fields to export' %}</p>
+            {% for field in fields %}
+                {% if field.name != "id" %}
+                <div class="span8">
+                    {% format_name field.name %}: <input id="id_{{ field.name }}" name="{{ field.name }}" type="checkbox" checked>
+                </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="submit-row">
+        <input class="default" type="submit" value="Export" name="_export">
+    </div>
+
+</form>
+{% endblock %}

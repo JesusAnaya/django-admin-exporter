@@ -12,6 +12,13 @@ except ImportError:
 	import StringIO
 
 
+def filter_names(names):
+	results = []
+	for name in names:
+		results.append(name.replace("_", " ").capitalize())
+	return results
+
+
 def json_to_csv(jsonData, fieldnames=None):
 	"""
 	Returns a CSV string from the given JSON data string.
@@ -27,6 +34,7 @@ def json_to_csv(jsonData, fieldnames=None):
 	d = json.loads(jsonData)
 	fieldnames = fieldnames or d[0].keys()
 	return dict_to_csv(d, fieldnames)
+
 
 def dict_to_csv(d, fieldnames):
 	"""

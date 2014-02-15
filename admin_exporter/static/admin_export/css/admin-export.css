@@ -1,0 +1,43 @@
+.filter-content {
+    min-height: 200px;
+    padding: 20px;
+    text-align: left;
+}
+
+.filter-content-table {
+    margin: 5px;
+    width: 100%;
+}
+
+.exporter-footer {
+    height: 40px;
+    margin: 0;
+    width: 100%;
+}
+
+.export-title {
+    font-size: 18px;
+    margin: 0 0 15px 5px;
+}
+
+.no-border {
+    border: none;
+}
+
+.span8 {
+    border-color: #C0C0C0;
+    border-radius: 5px;
+    border-style: solid;
+    border-width: 1px;
+    display: inline-block;
+    font-size: 17px;
+    margin: 2px 5px 2px 5px;
+    text-align: center;
+    padding: 5px;
+    position: relative;
+    width: 12%;
+}
+
+.span8 input {
+    margin: 0 0 0 8px;
+}
