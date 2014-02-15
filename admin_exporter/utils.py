@@ -16,6 +16,7 @@ def filter_duplicate_params(params):
 	for param in params:
 		if param != "":
 			return param
+	return params
 
 
 def filter_names(names):
