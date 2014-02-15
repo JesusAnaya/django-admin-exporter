@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.core import serializers
+from datetime import datetime
 from .utils import json_to_csv
 import json
 
@@ -34,10 +35,12 @@ def export(modeladmin, request, queryset, format):
         else:
             data = serialize_queryset(queryset, fieldnames, format)
 
+        now = datetime.now().strftime("%Y/%m/%d-%H:%M:%S")
         response = HttpResponse(data, mimetype="application/x-download")
-        content = "attachment;filename={filename}.{extention}".format(
-                                        extention=format.lower(),
-                                        filename=model_name.lower())
+        content = "attachment;filename={filename}-{now}.{extention}".format(
+                                                extention=format.lower(),
+                                                filename=model_name.lower(),
+                                                now=now)
         response["Content-Disposition"] = content
         return response
 
