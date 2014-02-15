@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.core import serializers
 from datetime import datetime
-from .utils import json_to_csv
+from .utils import json_to_csv, filter_duplicate_params
 import json
 
 
@@ -14,7 +14,7 @@ def serialize_queryset(queryset, values, format):
 def export(modeladmin, request, queryset, format):
     selected_action = request.POST.getlist('_selected_action')
     select_across = request.POST.get('select_across')
-    action = request.POST.get('action')
+    action = filter_duplicate_params(request.POST.getlist('action'))
     export_data = request.POST.get('export_data')
 
     if export_data:

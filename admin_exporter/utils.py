@@ -12,6 +12,12 @@ except ImportError:
 	import StringIO
 
 
+def filter_duplicate_params(params):
+	for param in params:
+		if param != "":
+			return param
+
+
 def filter_names(names):
 	results = []
 	for name in names:
