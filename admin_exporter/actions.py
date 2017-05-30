@@ -18,8 +18,8 @@ def export(modeladmin, request, queryset, format):
     export_data = request.POST.get('export_data')
 
     if export_data:
-    	model_name = modeladmin.model.__name__
-    	fieldnames = export_data.split(',')
+        model_name = modeladmin.model.__name__
+        fieldnames = export_data.split(',')
 
         if format == "csv":
             data = serialize_queryset(queryset, fieldnames, "json")
@@ -27,7 +27,6 @@ def export(modeladmin, request, queryset, format):
 
             dataFlattened = []
             for item in data:
-            	print item["fields"]
                 flattednedItem = item["fields"]
                 dataFlattened.append(flattednedItem)
             data = json.dumps(dataFlattened)
@@ -36,7 +35,7 @@ def export(modeladmin, request, queryset, format):
             data = serialize_queryset(queryset, fieldnames, format)
 
         now = datetime.now().strftime("%Y/%m/%d-%H:%M:%S")
-        response = HttpResponse(data, mimetype="application/x-download")
+        response = HttpResponse(data, content_type="application/x-download")
         content = "attachment;filename={filename}-{now}.{extention}".format(
                                                 extention=format.lower(),
                                                 filename=model_name.lower(),
@@ -45,7 +44,9 @@ def export(modeladmin, request, queryset, format):
         return response
 
     else:
-    	fields = modeladmin.model._meta.fields
+        fields = modeladmin.model._meta.fields
+
+        print (modeladmin.model._meta.fields)
 
         return render(request, "export_parameters.html", {
             'action': action,

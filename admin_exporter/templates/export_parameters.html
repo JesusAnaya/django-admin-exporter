@@ -27,7 +27,7 @@
             {% for field in fields %}
                 {% if field.name != "id" %}
                 <div class="span8">
-                    {% format_name field.name %}: <input id="id_{{ field.name }}" name="{{ field.name }}" type="checkbox" checked>
+                    {{ field.verbose_name }}: <input id="id_{{ field.name }}" name="{{ field.name }}" type="checkbox" checked>
                 </div>
                 {% endif %}
             {% endfor %}
